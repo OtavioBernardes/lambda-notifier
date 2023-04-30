@@ -21,8 +21,7 @@
 
 <p align="center">
    <picture>
-      <source media="(prefers-color-scheme: light)" srcset="https://raw.githubusercontent.com/OtavioBernardes/lambdas-notifier/main/public/arch_draw.png" />
-      <img>
+      <img src="https://raw.githubusercontent.com/OtavioBernardes/lambdas-notifier/main/public/arch_draw.png">
    </picture>
 </p>
 
