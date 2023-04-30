@@ -1,5 +1,5 @@
 <h1 align="center">
-   Dev-Pay - API
+   Lambdas Notifier
 </h1>
 
 <p align="center">
@@ -21,7 +21,7 @@
 
 <p align="center">
    <picture>
-      <source media="(prefers-color-scheme: light)" srcset="https://miro.medium.com/max/1400/1*0R0r00uF1RyRFxkxo3HVDg.png" />
+      <source media="(prefers-color-scheme: light)" srcset="https://raw.githubusercontent.com/OtavioBernardes/lambdas-notifier/main/public/arch_draw.png" />
       <img>
    </picture>
 </p>
