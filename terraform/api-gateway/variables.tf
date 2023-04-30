@@ -6,6 +6,9 @@ variable "hello_world_lambda" {
   })
 }
 
+variable "resource_path" {
+  type = string
+}
 variable "environment" {
   type = string
 }

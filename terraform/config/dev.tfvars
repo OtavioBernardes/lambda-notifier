@@ -14,3 +14,6 @@ hello_world_lambda = {
 ## IAM configs
 policy_lambda_name = "lambda_policy"
 role_lambda_name   = "hellow_world_lambda_role"
+
+## API Gateway configs
+resource_path = "notify"

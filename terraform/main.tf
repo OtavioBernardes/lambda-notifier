@@ -17,9 +17,9 @@ provider "aws" {
 }
 
 module "iam" {
-  source              = "./iam"
-  role_lambda_name    = var.role_lambda_name
-  policy_lambda_name  = var.policy_lambda_name
+  source             = "./iam"
+  role_lambda_name   = var.role_lambda_name
+  policy_lambda_name = var.policy_lambda_name
 }
 
 module "lambda" {
@@ -42,7 +42,8 @@ module "api-gateway" {
     lambda_handler = var.hello_world_lambda.lambda_handler
     runtime        = var.hello_world_lambda.runtime
   }
-  environment         = var.environment
+  environment   = var.environment
+  resource_path = var.resource_path
 
   depends_on = [
     module.lambda
