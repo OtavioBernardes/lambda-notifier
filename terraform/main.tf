@@ -51,3 +51,8 @@ module "api-gateway" {
     module.register-subscription-lambda
   ]
 }
+
+module "sns" {
+  source = "./sns"
+  sns = var.sns
+}

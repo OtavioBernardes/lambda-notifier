@@ -18,3 +18,8 @@ role_lambda_name   = "register_subscription_lambda_role"
 ## API Gateway configs
 api_gateway_name = "lambdas-notifier"
 resource_path = "notify"
+
+# SNS configs
+sns = {
+  topic_name    = "notify"
+}

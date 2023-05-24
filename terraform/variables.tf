@@ -31,3 +31,9 @@ variable "resource_path" {
 variable "api_gateway_name" {
   type = string
 }
+
+variable "sns" {
+  type = object({
+    topic_name    = string
+  })
+}
