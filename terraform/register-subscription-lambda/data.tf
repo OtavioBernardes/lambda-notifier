@@ -10,3 +10,7 @@ data "external" "generate_lambda_zip" {
 data "aws_iam_role" "this" {
   name = var.role_lambda_name
 }
+
+data "aws_sns_topic" "this" {
+  name = var.sns.topic_name
+}

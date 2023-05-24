@@ -9,3 +9,8 @@ variable "register_subscription_lambda" {
     runtime        = string
   })
 }
+variable "sns" {
+  type = object({
+    topic_name    = string
+  })
+}

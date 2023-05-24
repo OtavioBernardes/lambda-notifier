@@ -22,6 +22,10 @@ module "iam" {
   policy_lambda_name = var.policy_lambda_name
 }
 
+module "sns" {
+  source = "./sns"
+  sns = var.sns
+}
 module "register-subscription-lambda" {
   source           = "./register-subscription-lambda"
   role_lambda_name = var.role_lambda_name
@@ -30,8 +34,11 @@ module "register-subscription-lambda" {
     lambda_handler = var.register_subscription_lambda.lambda_handler
     runtime        = var.register_subscription_lambda.runtime
   }
+  sns = var.sns
+
   depends_on = [
-    module.iam
+    module.iam,
+    module.sns
   ]
 }
 
@@ -50,9 +57,4 @@ module "api-gateway" {
     module.iam,
     module.register-subscription-lambda
   ]
-}
-
-module "sns" {
-  source = "./sns"
-  sns = var.sns
 }
