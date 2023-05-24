@@ -2,7 +2,7 @@ variable "role_lambda_name" {
   type = string
 }
 
-variable "hello_world_lambda" {
+variable "register_subscription_lambda" {
   type = object({
     lambda_name    = string
     lambda_handler = string

@@ -22,13 +22,13 @@ module "iam" {
   policy_lambda_name = var.policy_lambda_name
 }
 
-module "lambda" {
-  source           = "./lambda"
+module "register-subscription-lambda" {
+  source           = "./register-subscription-lambda"
   role_lambda_name = var.role_lambda_name
-  hello_world_lambda = {
-    lambda_name    = var.hello_world_lambda.lambda_name
-    lambda_handler = var.hello_world_lambda.lambda_handler
-    runtime        = var.hello_world_lambda.runtime
+  register_subscription_lambda = {
+    lambda_name    = var.register_subscription_lambda.lambda_name
+    lambda_handler = var.register_subscription_lambda.lambda_handler
+    runtime        = var.register_subscription_lambda.runtime
   }
   depends_on = [
     module.iam
@@ -37,16 +37,17 @@ module "lambda" {
 
 module "api-gateway" {
   source = "./api-gateway"
-  hello_world_lambda = {
-    lambda_name    = var.hello_world_lambda.lambda_name
-    lambda_handler = var.hello_world_lambda.lambda_handler
-    runtime        = var.hello_world_lambda.runtime
+  register_subscription_lambda = {
+    lambda_name      = var.register_subscription_lambda.lambda_name
+    lambda_handler   = var.register_subscription_lambda.lambda_handler
+    runtime          = var.register_subscription_lambda.runtime
   }
   environment   = var.environment
   resource_path = var.resource_path
+  api_gateway_name = var.api_gateway_name
 
   depends_on = [
     module.iam,
-    module.lambda
+    module.register-subscription-lambda
   ]
 }

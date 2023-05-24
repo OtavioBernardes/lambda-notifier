@@ -1,6 +1,6 @@
 resource "aws_api_gateway_rest_api" "this" {
-  name        = var.hello_world_lambda.lambda_name
-  description = "Terraform Serverless Application - ${var.hello_world_lambda.lambda_name}"
+  name        = var.api_gateway_name
+  description = "Terraform Serverless Application"
 }
 
 resource "aws_api_gateway_resource" "this" {
