@@ -46,6 +46,7 @@ module "api-gateway" {
   resource_path = var.resource_path
 
   depends_on = [
+    module.iam,
     module.lambda
   ]
 }

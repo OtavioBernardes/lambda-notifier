@@ -1,22 +1,6 @@
 resource "aws_api_gateway_rest_api" "this" {
   name        = var.hello_world_lambda.lambda_name
   description = "Terraform Serverless Application - ${var.hello_world_lambda.lambda_name}"
-  policy = jsonencode(
-    {
-      "Version" : "2012-10-17",
-      "Statement" : {
-        "Effect" = "Allow"
-
-        "Principal" = "*"
-        "Action" = [
-          "execute-api:Invoke"
-        ]
-        "Resource" : [
-          "execute-api:/*"
-        ]
-      }
-    }
-  )
 }
 
 resource "aws_api_gateway_resource" "this" {
@@ -37,11 +21,10 @@ resource "aws_api_gateway_integration" "this" {
   resource_id = aws_api_gateway_method.this.resource_id
   http_method = aws_api_gateway_method.this.http_method
 
-  integration_http_method = "GET"
+  integration_http_method = "POST"
   type                    = "AWS"
   uri                     = data.aws_lambda_function.this.invoke_arn
 }
-
 
 resource "aws_api_gateway_method_response" "this" {
   rest_api_id = aws_api_gateway_rest_api.this.id
@@ -54,6 +37,11 @@ resource "aws_api_gateway_integration_response" "this" {
   resource_id = aws_api_gateway_resource.this.id
   http_method = aws_api_gateway_method.this.http_method
   status_code = aws_api_gateway_method_response.this.status_code
+
+  depends_on = [
+    aws_api_gateway_integration.this,
+    aws_api_gateway_integration.this,
+  ]
 }
 resource "aws_api_gateway_deployment" "this" {
   depends_on = [
@@ -64,11 +52,14 @@ resource "aws_api_gateway_deployment" "this" {
   stage_name  = var.environment
 }
 
-resource "aws_lambda_permission" "this" {
-  statement_id  = "AllowAPIGatewayInvoke"
-  action        = "lambda:InvokeFunction"
-  function_name = data.aws_lambda_function.this.function_name
-  principal     = "apigateway.amazonaws.com"
 
-  source_arn = "${aws_api_gateway_rest_api.this.execution_arn}/*/*"
+resource "aws_lambda_permission" "this" {
+   statement_id  = "AllowAPIGatewayInvoke"
+   action        = "lambda:InvokeFunction"
+   function_name = data.aws_lambda_function.this.function_name
+   principal     = "apigateway.amazonaws.com"
+
+   # The "/*/*" portion grants access from any method on any resource
+   # within the API Gateway REST API.
+   source_arn = "${aws_api_gateway_rest_api.this.execution_arn}/*/*"
 }
