@@ -2,6 +2,9 @@
 set -e
 eval "$(jq -r '@sh "LAMBDA_NAME=\(.lambda_name)"')"
 
-zip -q -j ../terraform/lambda.zip ../lambdas/${LAMBDA_NAME}/index.js
+cd ../lambdas/${LAMBDA_NAME}
+
+npm i --silent
+zip -r -q ../../terraform/lambda.zip .
 
 jq -n '{file_name:"lambda.zip"}'
