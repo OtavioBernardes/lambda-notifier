@@ -24,17 +24,25 @@ module "iam" {
 
 module "sns" {
   source = "./sns"
-  sns = var.sns
+  sns    = var.sns
 }
 module "register-subscription-lambda" {
-  source           = "./register-subscription-lambda"
-  role_lambda_name = var.role_lambda_name
-  register_subscription_lambda = {
-    lambda_name    = var.register_subscription_lambda.lambda_name
-    lambda_handler = var.register_subscription_lambda.lambda_handler
-    runtime        = var.register_subscription_lambda.runtime
-  }
-  sns = var.sns
+  source                       = "./register-subscription-lambda"
+  role_lambda_name             = var.role_lambda_name
+  register_subscription_lambda = var.register_subscription_lambda
+  sns                          = var.sns
+
+  depends_on = [
+    module.iam,
+    module.sns
+  ]
+}
+
+module "schedule-message-lambda" {
+  source                    = "./schedule-message-lambda"
+  role_schedule_lambda_name = var.role_schedule_lambda_name
+  schedule_message_lambda   = var.schedule_message_lambda
+  sns                       = var.sns
 
   depends_on = [
     module.iam,
@@ -43,15 +51,10 @@ module "register-subscription-lambda" {
 }
 
 module "api-gateway" {
-  source = "./api-gateway"
-  register_subscription_lambda = {
-    lambda_name      = var.register_subscription_lambda.lambda_name
-    lambda_handler   = var.register_subscription_lambda.lambda_handler
-    runtime          = var.register_subscription_lambda.runtime
-  }
-  environment   = var.environment
-  resource_path = var.resource_path
-  api_gateway_name = var.api_gateway_name
+  source                       = "./api-gateway"
+  api_gateway = var.api_gateway
+  register_subscription_lambda = var.register_subscription_lambda
+  environment                  = var.environment
 
   depends_on = [
     module.iam,

@@ -6,14 +6,14 @@ variable "register_subscription_lambda" {
   })
 }
 
-variable "resource_path" {
-  type = string
-}
-
 variable "environment" {
   type = string
 }
 
-variable "api_gateway_name"{
-  type = string
+variable "api_gateway"{
+  type = object({
+    name = string
+    resource_subscription = string
+    resource_schedule = string
+  })
 }
