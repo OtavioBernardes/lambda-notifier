@@ -27,12 +27,12 @@ api_gateway = {
   name = "lambdas-notifier"
   resources = [
     {
-      resource = "subscription",
-      lambda   = "register-subscription"
+      resource : "subscription",
+      lambda   : "register-subscription"
     },
     {
-      resource = "schedule",
-      lambda   = "schedule-message"
+      resource : "schedule",
+      lambda   : "schedule-message"
     }
   ]
 }

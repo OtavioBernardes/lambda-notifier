@@ -1,7 +1,5 @@
-data "aws_lambda_function" "register_lambda" {
-  function_name = var.api_gateway.resources[0].lambda
-}
+data "aws_lambda_function" "this" {
+  for_each = { for idx, val in var.api_gateway.resources : idx => val }
 
-data "aws_lambda_function" "schedule_lambda" {
-  function_name = var.api_gateway.resources[1].lambda
+  function_name = each.value.lambda
 }

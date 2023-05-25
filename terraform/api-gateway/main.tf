@@ -4,39 +4,49 @@ resource "aws_api_gateway_rest_api" "this" {
 }
 
 resource "aws_api_gateway_resource" "this" {
+  for_each = { for idx, val in var.api_gateway.resources : idx => val }
+
   rest_api_id = aws_api_gateway_rest_api.this.id
   parent_id   = aws_api_gateway_rest_api.this.root_resource_id
-  path_part   = var.api_gateway.resources[0].resource
+  path_part   = each.value.resource
 }
 
 resource "aws_api_gateway_method" "this" {
+  for_each = { for idx, val in var.api_gateway.resources : idx => val }
+
   rest_api_id   = aws_api_gateway_rest_api.this.id
-  resource_id   = aws_api_gateway_resource.this.id
+  resource_id   = aws_api_gateway_resource.this[each.key].id
   http_method   = "POST"
   authorization = "NONE"
 }
 
 resource "aws_api_gateway_integration" "this" {
+  for_each = data.aws_lambda_function.this
+
   rest_api_id = aws_api_gateway_rest_api.this.id
-  resource_id = aws_api_gateway_method.this.resource_id
-  http_method = aws_api_gateway_method.this.http_method
+  resource_id = aws_api_gateway_method.this[each.key].resource_id
+  http_method = aws_api_gateway_method.this[each.key].http_method
 
   integration_http_method = "POST"
   type                    = "AWS"
-  uri                     = data.aws_lambda_function.register_lambda.invoke_arn
+  uri                     = each.value.invoke_arn
 }
 
 resource "aws_api_gateway_method_response" "this" {
+  for_each = { for idx, val in var.api_gateway.resources : idx => val }
+
   rest_api_id = aws_api_gateway_rest_api.this.id
-  resource_id = aws_api_gateway_resource.this.id
-  http_method = aws_api_gateway_method.this.http_method
+  resource_id = aws_api_gateway_resource.this[each.key].id
+  http_method = aws_api_gateway_method.this[each.key].http_method
   status_code = "200"
 }
 resource "aws_api_gateway_integration_response" "this" {
+  for_each = { for idx, val in var.api_gateway.resources : idx => val }
+
   rest_api_id = aws_api_gateway_rest_api.this.id
-  resource_id = aws_api_gateway_resource.this.id
-  http_method = aws_api_gateway_method.this.http_method
-  status_code = aws_api_gateway_method_response.this.status_code
+  resource_id = aws_api_gateway_resource.this[each.key].id
+  http_method = aws_api_gateway_method.this[each.key].http_method
+  status_code = aws_api_gateway_method_response.this[each.key].status_code
 
   depends_on = [
     aws_api_gateway_integration.this,
@@ -54,12 +64,12 @@ resource "aws_api_gateway_deployment" "this" {
 
 
 resource "aws_lambda_permission" "this" {
-   statement_id  = "AllowAPIGatewayInvoke"
-   action        = "lambda:InvokeFunction"
-   function_name = data.aws_lambda_function.register_lambda.function_name
-   principal     = "apigateway.amazonaws.com"
+  for_each = { for idx, val in var.api_gateway.resources : idx => val }
 
-   # The "/*/*" portion grants access from any method on any resource
-   # within the API Gateway REST API.
-   source_arn = "${aws_api_gateway_rest_api.this.execution_arn}/*/*"
+  statement_id  = "AllowAPIGatewayInvoke"
+  action        = "lambda:InvokeFunction"
+  function_name = each.value.lambda
+  principal     = "apigateway.amazonaws.com"
+
+  source_arn = "${aws_api_gateway_rest_api.this.execution_arn}/*/*"
 }
