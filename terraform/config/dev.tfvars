@@ -2,7 +2,7 @@ aws = {
   region = "us-east-1"
 }
 
-environment = "development"
+environment = "dev"
 
 # Lambdas configs
 register_subscription_lambda = {
@@ -24,9 +24,17 @@ role_schedule_lambda_name = "register_subscription_lambda_role"
 
 ## API Gateway configs
 api_gateway = {
-  name                  = "lambdas-notifier"
-  resource_subscription = "subscription",
-  resource_schedule     = "schedule"
+  name = "lambdas-notifier"
+  resources = [
+    {
+      resource = "subscription",
+      lambda   = "register-subscription"
+    },
+    {
+      resource = "schedule",
+      lambda   = "schedule-message"
+    }
+  ]
 }
 
 # SNS configs

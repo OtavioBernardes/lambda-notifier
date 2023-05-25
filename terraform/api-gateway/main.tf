@@ -6,7 +6,7 @@ resource "aws_api_gateway_rest_api" "this" {
 resource "aws_api_gateway_resource" "this" {
   rest_api_id = aws_api_gateway_rest_api.this.id
   parent_id   = aws_api_gateway_rest_api.this.root_resource_id
-  path_part   = var.api_gateway.resource_subscription
+  path_part   = var.api_gateway.resources[0].resource
 }
 
 resource "aws_api_gateway_method" "this" {
@@ -23,7 +23,7 @@ resource "aws_api_gateway_integration" "this" {
 
   integration_http_method = "POST"
   type                    = "AWS"
-  uri                     = data.aws_lambda_function.this.invoke_arn
+  uri                     = data.aws_lambda_function.register_lambda.invoke_arn
 }
 
 resource "aws_api_gateway_method_response" "this" {
@@ -56,7 +56,7 @@ resource "aws_api_gateway_deployment" "this" {
 resource "aws_lambda_permission" "this" {
    statement_id  = "AllowAPIGatewayInvoke"
    action        = "lambda:InvokeFunction"
-   function_name = data.aws_lambda_function.this.function_name
+   function_name = data.aws_lambda_function.register_lambda.function_name
    principal     = "apigateway.amazonaws.com"
 
    # The "/*/*" portion grants access from any method on any resource

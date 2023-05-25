@@ -1,19 +1,15 @@
-variable "register_subscription_lambda" {
+variable "api_gateway" {
   type = object({
-    lambda_name    = string
-    lambda_handler = string
-    runtime        = string
+    name = string
+    resources = list(
+      object({
+        resource = string
+        lambda   = string
+      })
+    )
   })
 }
 
 variable "environment" {
   type = string
-}
-
-variable "api_gateway"{
-  type = object({
-    name = string
-    resource_subscription = string
-    resource_schedule = string
-  })
 }

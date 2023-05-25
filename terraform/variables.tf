@@ -10,9 +10,9 @@ variable "aws" {
 
 variable "register_subscription_lambda" {
   type = object({
-    lambda_name = string
+    lambda_name    = string
     lambda_handler = string
-    runtime = string
+    runtime        = string
   })
 }
 
@@ -36,16 +36,20 @@ variable "policy_lambda_name" {
   type = string
 }
 
-variable "api_gateway"{
+variable "api_gateway" {
   type = object({
     name = string
-    resource_subscription = string
-    resource_schedule = string
+    resources = list(
+      object({
+        resource = string
+        lambda   = string
+      })
+    )
   })
 }
 
 variable "sns" {
   type = object({
-    topic_name    = string
+    topic_name = string
   })
 }

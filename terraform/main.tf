@@ -52,8 +52,7 @@ module "schedule-message-lambda" {
 
 module "api-gateway" {
   source                       = "./api-gateway"
-  api_gateway = var.api_gateway
-  register_subscription_lambda = var.register_subscription_lambda
+  api_gateway                  = var.api_gateway
   environment                  = var.environment
 
   depends_on = [
