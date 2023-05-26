@@ -17,5 +17,5 @@ resource "aws_iam_role_policy" "policy_lambda_schedule" {
 }
 resource "aws_iam_role" "role_lambda_schedule" {
   name = var.iam.role_lambda_schedule
-  assume_role_policy = file("./iam/roles/role-lambda.json")
+  assume_role_policy = file("./iam/roles/role-lambda-schedule.json")
 }

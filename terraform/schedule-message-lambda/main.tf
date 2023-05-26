@@ -9,6 +9,7 @@ resource "aws_lambda_function" "this" {
   environment {
     variables = {
       SNS_TOPIC_ARN = data.aws_sns_topic.this.arn
+      TARGET_ROLE = data.aws_iam_role.this.arn
     }
   }
 }
