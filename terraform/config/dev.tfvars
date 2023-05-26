@@ -17,22 +17,25 @@ schedule_message_lambda = {
   runtime        = "nodejs18.x"
 }
 
-## IAM configs
-policy_lambda_name        = "lambda_policy"
-role_lambda_name          = "register_subscription_lambda_role"
-role_schedule_lambda_name = "register_subscription_lambda_role"
+# IAM configs
+iam = {
+  policy_lambda_subscription = "policy_lambda_subscription"
+  policy_lambda_schedule     = "policy_lambda_schedule"
+  role_lambda_subscription   = "role_lambda_subscription"
+  role_lambda_schedule       = "role_lambda_schedule"
+}
 
-## API Gateway configs
+# API Gateway configs
 api_gateway = {
   name = "lambdas-notifier"
   resources = [
     {
       resource : "subscription",
-      lambda   : "register-subscription"
+      lambda : "register-subscription"
     },
     {
       resource : "schedule",
-      lambda   : "schedule-message"
+      lambda : "schedule-message"
     }
   ]
 }

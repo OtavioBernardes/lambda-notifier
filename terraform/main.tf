@@ -17,9 +17,8 @@ provider "aws" {
 }
 
 module "iam" {
-  source             = "./iam"
-  role_lambda_name   = var.role_lambda_name
-  policy_lambda_name = var.policy_lambda_name
+  source = "./iam"
+  iam    = var.iam
 }
 
 module "sns" {
@@ -28,7 +27,7 @@ module "sns" {
 }
 module "register-subscription-lambda" {
   source                       = "./register-subscription-lambda"
-  role_lambda_name             = var.role_lambda_name
+  role_lambda_name             = var.iam.role_lambda_subscription
   register_subscription_lambda = var.register_subscription_lambda
   sns                          = var.sns
 
@@ -40,7 +39,7 @@ module "register-subscription-lambda" {
 
 module "schedule-message-lambda" {
   source                    = "./schedule-message-lambda"
-  role_schedule_lambda_name = var.role_schedule_lambda_name
+  role_schedule_lambda_name = var.iam.role_lambda_schedule
   schedule_message_lambda   = var.schedule_message_lambda
   sns                       = var.sns
 
@@ -51,12 +50,13 @@ module "schedule-message-lambda" {
 }
 
 module "api-gateway" {
-  source                       = "./api-gateway"
-  api_gateway                  = var.api_gateway
-  environment                  = var.environment
+  source      = "./api-gateway"
+  api_gateway = var.api_gateway
+  environment = var.environment
 
   depends_on = [
     module.iam,
-    module.register-subscription-lambda
+    module.register-subscription-lambda,
+    module.schedule-message-lambda
   ]
 }

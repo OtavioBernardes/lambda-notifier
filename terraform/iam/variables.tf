@@ -1,7 +1,8 @@
-variable "role_lambda_name" {
-  type = string
-}
-
-variable "policy_lambda_name" {
-  type = string
+variable "iam" {
+  type = object({
+    policy_lambda_subscription = string
+    policy_lambda_schedule     = string
+    role_lambda_subscription   = string
+    role_lambda_schedule       = string
+  })
 }
