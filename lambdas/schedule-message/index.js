@@ -4,7 +4,7 @@ const scheduler = new AWS.Scheduler({ apiVersion: '2021-06-30' });
 
 module.exports.handler = (event) => {
   if (!event.message)
-    throw new Error('Missing event message')
+    throw new Error('Missing message field in event')
 
   const rule = `new-message-${new Date().getTime()}`
   const target = {

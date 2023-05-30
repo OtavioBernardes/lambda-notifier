@@ -4,7 +4,7 @@ const sns = new AWS.SNS({ apiVersion: '2010-03-31' })
 
 module.exports.handler = async (event) => {
   if (!event.email)
-    throw new Error('Missing email')
+    throw new Error('Missing email in event')
 
   const params = {
     Protocol: 'email',

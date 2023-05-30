@@ -4,29 +4,38 @@ aws = {
 
 environment = "dev"
 
+# SNS configs
+sns = {
+  topic_name = "notify"
+}
+
 # Lambdas configs
 register_subscription_lambda = {
-  lambda_name    = "register-subscription"
-  lambda_handler = "index.handler"
-  runtime        = "nodejs18.x"
-  timeout        = 120
+  name    = "register-subscription"
+  handler = "index.handler"
+  runtime = "nodejs18.x"
+  timeout = 120
 }
 
 schedule_message_lambda = {
-  lambda_name    = "schedule-message"
-  lambda_handler = "index.handler"
-  runtime        = "nodejs18.x"
-  timeout        = 120
+  name    = "schedule-message"
+  handler = "index.handler"
+  runtime = "nodejs18.x"
+  timeout = 120
 }
 
 # IAM configs
 iam = {
-  policy_lambda_subscription = "policy_lambda_subscription"
-  policy_lambda_schedule     = "policy_lambda_schedule"
-  role_lambda_subscription   = "role_lambda_subscription"
-  role_lambda_schedule       = "role_lambda_schedule"
-  policy_scheduler           = "policy_scheduler"
-  role_scheduler             = "role_scheduler"
+  policies = {
+    event_bridge_scheduler = "policy_scheduler_invoke_sns"
+    lambda_schedule        = "policy_lambda_schedule"
+    lambda_subscription    = "policy_lambda_subscription"
+  },
+  roles = {
+    event_bridge_scheduler = "role_scheduler_invoke_sns"
+    lambda_schedule        = "role_lambda_schedule"
+    lambda_subscription    = "role_lambda_subscription"
+  }
 }
 
 # API Gateway configs
@@ -42,9 +51,4 @@ api_gateway = {
       lambda : "schedule-message"
     }
   ]
-}
-
-# SNS configs
-sns = {
-  topic_name = "notify"
 }

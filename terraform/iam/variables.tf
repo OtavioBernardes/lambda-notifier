@@ -1,10 +1,14 @@
 variable "iam" {
   type = object({
-    policy_lambda_subscription = string
-    policy_lambda_schedule     = string
-    policy_scheduler           = string
-    role_lambda_subscription   = string
-    role_lambda_schedule       = string
-    role_scheduler             = string
+    policies = object({
+      event_bridge_scheduler = string
+      lambda_schedule        = string
+      lambda_subscription    = string
+    })
+    roles = object({
+      event_bridge_scheduler = string
+      lambda_schedule        = string
+      lambda_subscription    = string
+    })
   })
 }

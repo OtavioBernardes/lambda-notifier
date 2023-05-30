@@ -8,32 +8,45 @@ variable "aws" {
   })
 }
 
+variable "sns" {
+  type = object({
+    topic_name = string
+  })
+}
+
 variable "register_subscription_lambda" {
   type = object({
-    lambda_name    = string
-    lambda_handler = string
-    runtime        = string
-    timeout        = number
+    name    = string
+    handler = string
+    runtime = string
+    timeout = number
   })
 }
+
 variable "schedule_message_lambda" {
   type = object({
-    lambda_name    = string
-    lambda_handler = string
-    runtime        = string
-    timeout        = number
+    name    = string
+    handler = string
+    runtime = string
+    timeout = number
   })
 }
+
 variable "iam" {
   type = object({
-    policy_lambda_subscription = string
-    policy_lambda_schedule     = string
-    policy_scheduler           = string
-    role_lambda_subscription   = string
-    role_lambda_schedule       = string
-    role_scheduler             = string
+    policies = object({
+      event_bridge_scheduler = string
+      lambda_schedule        = string
+      lambda_subscription    = string
+    })
+    roles = object({
+      event_bridge_scheduler = string
+      lambda_schedule        = string
+      lambda_subscription    = string
+    })
   })
 }
+
 variable "api_gateway" {
   type = object({
     name = string
@@ -43,11 +56,5 @@ variable "api_gateway" {
         lambda   = string
       })
     )
-  })
-}
-
-variable "sns" {
-  type = object({
-    topic_name = string
   })
 }

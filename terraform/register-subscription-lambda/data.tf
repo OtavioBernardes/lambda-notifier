@@ -1,14 +1,14 @@
 data "external" "generate_lambda_zip" {
   # Script run from the main.tf path
-  program = ["bash", "../scripts/generate-lambda.sh"] 
+  program = ["bash", "../scripts/generate-lambda.sh"]
 
   query = {
-    lambda_name = var.register_subscription_lambda.lambda_name
+    lambda_name = var.lambda.name
   }
 }
 
 data "aws_iam_role" "this" {
-  name = var.role_lambda_name
+  name = var.lambda.role_name
 }
 
 data "aws_sns_topic" "this" {

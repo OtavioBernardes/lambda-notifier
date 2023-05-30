@@ -5,10 +5,6 @@ terraform {
       "source"  = "hashicorp/aws",
       "version" = "4.60.0"
     }
-    random = {
-      "source"  = "hashicorp/random",
-      "version" = "3.4.3"
-    }
   }
 }
 
@@ -25,30 +21,6 @@ module "sns" {
   source = "./sns"
   sns    = var.sns
 }
-module "register-subscription-lambda" {
-  source                       = "./register-subscription-lambda"
-  role_lambda_name             = var.iam.role_lambda_subscription
-  register_subscription_lambda = var.register_subscription_lambda
-  sns                          = var.sns
-
-  depends_on = [
-    module.iam,
-    module.sns
-  ]
-}
-
-module "schedule-message-lambda" {
-  source                    = "./schedule-message-lambda"
-  role_schedule_lambda_name = var.iam.role_lambda_schedule
-  role_scheduler            = var.iam.role_scheduler
-  schedule_message_lambda   = var.schedule_message_lambda
-  sns                       = var.sns
-
-  depends_on = [
-    module.iam,
-    module.sns
-  ]
-}
 
 module "api-gateway" {
   source      = "./api-gateway"
@@ -59,5 +31,40 @@ module "api-gateway" {
     module.iam,
     module.register-subscription-lambda,
     module.schedule-message-lambda
+  ]
+}
+
+module "register-subscription-lambda" {
+  source = "./register-subscription-lambda"
+  lambda = {
+    name      = var.register_subscription_lambda.name
+    handler   = var.register_subscription_lambda.handler
+    runtime   = var.register_subscription_lambda.runtime
+    timeout   = var.register_subscription_lambda.timeout
+    role_name = var.iam.roles.lambda_subscription
+  }
+  sns = var.sns
+
+  depends_on = [
+    module.iam,
+    module.sns
+  ]
+}
+
+module "schedule-message-lambda" {
+  source                      = "./schedule-message-lambda"
+  role_event_bridge_scheduler = var.iam.roles.event_bridge_scheduler
+  lambda = {
+    name      = var.schedule_message_lambda.name
+    handler   = var.schedule_message_lambda.handler
+    runtime   = var.schedule_message_lambda.runtime
+    timeout   = var.schedule_message_lambda.timeout
+    role_name = var.iam.roles.lambda_schedule
+  }
+  sns = var.sns
+
+  depends_on = [
+    module.iam,
+    module.sns
   ]
 }

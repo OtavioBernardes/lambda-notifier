@@ -1,15 +1,13 @@
-variable "role_lambda_name" {
-  type = string
-}
-
-variable "register_subscription_lambda" {
+variable "lambda" {
   type = object({
-    lambda_name    = string
-    lambda_handler = string
-    runtime        = string
-    timeout        = number
+    name      = string
+    handler   = string
+    runtime   = string
+    timeout   = number
+    role_name = string
   })
 }
+
 variable "sns" {
   type = object({
     topic_name = string

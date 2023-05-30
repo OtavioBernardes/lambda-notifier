@@ -3,16 +3,16 @@ data "external" "generate_lambda_zip" {
   program = ["bash", "../scripts/generate-lambda.sh"]
 
   query = {
-    lambda_name = var.schedule_message_lambda.lambda_name
+    lambda_name = var.lambda.name
   }
 }
 
 data "aws_iam_role" "this" {
-  name = var.role_schedule_lambda_name
+  name = var.lambda.role_name
 }
 
 data "aws_iam_role" "role_scheduler" {
-  name = var.role_scheduler
+  name = var.role_event_bridge_scheduler
 }
 
 data "aws_sns_topic" "this" {

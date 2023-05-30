@@ -1,16 +1,13 @@
-variable "role_schedule_lambda_name" {
+variable "role_event_bridge_scheduler" {
   type = string
 }
-
-variable "role_scheduler" {
-  type = string
-}
-variable "schedule_message_lambda" {
+variable "lambda" {
   type = object({
-    lambda_name    = string
-    lambda_handler = string
-    runtime        = string
-    timeout        = number
+    name      = string
+    handler   = string
+    runtime   = string
+    timeout   = number
+    role_name = string
   })
 }
 
