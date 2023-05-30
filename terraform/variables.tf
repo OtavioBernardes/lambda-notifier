@@ -13,6 +13,7 @@ variable "register_subscription_lambda" {
     lambda_name    = string
     lambda_handler = string
     runtime        = string
+    timeout        = number
   })
 }
 variable "schedule_message_lambda" {
@@ -20,6 +21,7 @@ variable "schedule_message_lambda" {
     lambda_name    = string
     lambda_handler = string
     runtime        = string
+    timeout        = number
   })
 }
 variable "iam" {

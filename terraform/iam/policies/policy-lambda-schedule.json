@@ -3,6 +3,8 @@
   "Statement": [
     {
       "Action": [
+        "iam:GetRole",
+        "iam:PassRole",
         "ec2:CreateNetworkInterface",
         "ec2:DescribeNetworkInterfaces",
         "ec2:DeleteNetworkInterface",

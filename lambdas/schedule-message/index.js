@@ -2,7 +2,7 @@ const AWS = require('aws-sdk');
 
 const scheduler = new AWS.Scheduler({ apiVersion: '2021-06-30' });
 
-module.exports.handler = async (event) => {
+module.exports.handler = (event) => {
   if (!event.message)
     throw new Error('Missing event message')
 
@@ -28,10 +28,10 @@ module.exports.handler = async (event) => {
 
   scheduler.createSchedule(params, function (error, data) {
     if (error) {
-      logger.error('createSchedule: Error ', { error: JSON.stringify(error) });
+      console.log('createSchedule: Error ', { error: JSON.stringify(error) });
       throw error;
     } else {
-      logger.info(`createSchedule: Success. Data: ${JSON.stringify(data)}`);
+      console.log(`createSchedule: Success. Data: ${JSON.stringify(data)}`);
     }
   });
 

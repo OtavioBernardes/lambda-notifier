@@ -7,11 +7,12 @@ variable "schedule_message_lambda" {
     lambda_name    = string
     lambda_handler = string
     runtime        = string
+    timeout        = number
   })
 }
 
 variable "sns" {
   type = object({
-    topic_name    = string
+    topic_name = string
   })
 }

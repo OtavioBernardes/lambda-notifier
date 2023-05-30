@@ -9,12 +9,14 @@ register_subscription_lambda = {
   lambda_name    = "register-subscription"
   lambda_handler = "index.handler"
   runtime        = "nodejs18.x"
+  timeout        = 120
 }
 
 schedule_message_lambda = {
   lambda_name    = "schedule-message"
   lambda_handler = "index.handler"
   runtime        = "nodejs18.x"
+  timeout        = 120
 }
 
 # IAM configs

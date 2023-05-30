@@ -3,7 +3,7 @@ resource "aws_lambda_function" "this" {
   function_name = var.register_subscription_lambda.lambda_name
   role          = data.aws_iam_role.this.arn
   handler       = var.register_subscription_lambda.lambda_handler
-
+  timeout       = var.register_subscription_lambda.timeout
   runtime = var.register_subscription_lambda.runtime
 
   environment {
