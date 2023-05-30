@@ -2,6 +2,9 @@ variable "role_schedule_lambda_name" {
   type = string
 }
 
+variable "role_scheduler" {
+  type = string
+}
 variable "schedule_message_lambda" {
   type = object({
     lambda_name    = string

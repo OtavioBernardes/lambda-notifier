@@ -40,6 +40,7 @@ module "register-subscription-lambda" {
 module "schedule-message-lambda" {
   source                    = "./schedule-message-lambda"
   role_schedule_lambda_name = var.iam.role_lambda_schedule
+  role_scheduler            = var.iam.role_scheduler
   schedule_message_lambda   = var.schedule_message_lambda
   sns                       = var.sns
 

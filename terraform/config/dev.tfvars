@@ -25,6 +25,8 @@ iam = {
   policy_lambda_schedule     = "policy_lambda_schedule"
   role_lambda_subscription   = "role_lambda_subscription"
   role_lambda_schedule       = "role_lambda_schedule"
+  policy_scheduler           = "policy_scheduler"
+  role_scheduler             = "role_scheduler"
 }
 
 # API Gateway configs
