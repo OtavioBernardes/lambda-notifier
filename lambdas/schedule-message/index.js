@@ -39,7 +39,13 @@ module.exports.handler = (event) => {
 }
 
 const mountScheduleExpression = () => {
-  const minutes = new Date().getUTCMinutes() + 2;
+  const now = new Date()
+  now.setMinutes(now.getMinutes() + 2);
 
-  return `cron(${minutes} * * * ? *)`
+  const minutes = now.getUTCMinutes() + 2;
+  const hours = now.getUTCHours()
+  const month = now.getUTCMonth() + 1
+  const year = now.getUTCFullYear()
+
+  return `cron(${minutes} ${hours} ${month} ? ${year} ?)`
 }
