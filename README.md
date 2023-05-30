@@ -40,10 +40,17 @@ The lambda-notifier is a project that uses AWS resources to subscribe to a newsl
 3. Configure your AWS CLI with your credentials: `AWS configure`
 4. Run the following command to create a infrastructure in your AWS workpace: `terraform apply --var-file=config/dev.tfvars --auto-approve`
 5. Access to your AWS console and verify in API gateway our api endpoint.
-6. Create a subscription in POST -> `/subscription`.
+6. Create a subscription in POST -> `/subscription`:
+  ```
+  {
+    "email": "test@example.com"
+  }
+  ```
 7. Confirm your subscription in your email
-8. Scheduler a new email in POST -> `/scheduling/`
+8. Scheduler a new email in POST -> `/schedule`: 
+  ```
+  {
+    "message": "testing schedule"
+  }
+  ```
 9. Await the time and verify your email
-
-
-**Free Software, Hell Yeah!**
