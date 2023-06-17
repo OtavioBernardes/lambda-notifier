@@ -1,5 +1,5 @@
 <h1 align="center">
-   Lambdas Notifier
+   Lambda Notifier
 </h1>
 
 <p align="center">
