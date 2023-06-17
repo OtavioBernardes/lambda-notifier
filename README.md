@@ -50,7 +50,10 @@ The lambda-notifier is a project that uses AWS resources to enable the subscript
 8. Scheduler a new email in POST -> `/schedule`: 
   ```
   {
-    "message": "testing schedule"
+    "message": "testing schedule",
+    "minutesOffset": "5"
   }
   ```
+*minutesOffset*: Time in minutes to be added to the moment **(min: 2)**
+
 9. Await the time and verify your email
