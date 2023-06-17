@@ -24,7 +24,7 @@
 </p>
 
 ## :question: About
-The lambda-notifier is a project that uses AWS resources to subscribe to a newsletter and schedule the sending of emails.
+The lambda-notifier is a project that uses AWS resources to enable the subscription to a newsletter and automate the email notifications.
 
 ## :gear: Technologies
 
