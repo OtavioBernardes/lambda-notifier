@@ -1,9 +1,9 @@
 const AWS = require('aws-sdk');
 
 const scheduler = new AWS.Scheduler({ apiVersion: '2021-06-30' });
-const minTimeScheduler = 2
+const minTimeScheduler = 2;
 
-module.exports.handler = (event) => {
+module.exports.handler = async (event) => {
   const body = JSON.parse(event.body);
   const minutesOffset = body.minutesOffset >= minTimeScheduler ? body.minutesOffset : minTimeScheduler;
 
@@ -34,14 +34,13 @@ module.exports.handler = (event) => {
     Target: target,
   };
 
-  scheduler.createSchedule(params, function (error, data) {
-    if (error) {
-      console.log('createSchedule: Error', { error: JSON.stringify(error) });
-      throw error;
-    } else {
-      console.log(`createSchedule: Success. Data: ${JSON.stringify(data)}`);
-    }
-  });
+  try {
+    const data = await scheduler.createSchedule(params).promise();
+    console.log(`createSchedule: Success. Data: ${JSON.stringify(data)}`);
+  } catch (error) {
+    console.log('createSchedule: Error', { error: JSON.stringify(error) });
+    throw error;
+  }
 
   return {
     statusCode: 201,
@@ -53,11 +52,11 @@ const mountScheduleExpression = (minutesOffset) => {
   const now = new Date();
   now.setMinutes(now.getMinutes() + minutesOffset);
 
-  const minutes = now.getUTCMinutes().toString().padStart(2, '0');
-  const hours = now.getUTCHours().toString().padStart(2, '0');
-  const month = now.getUTCMonth() + 1;
-  const year = now.getUTCFullYear();
+  const minutes = now.getUTCMinutes()
+  const hours = now.getUTCHours()
+  const day = now.getUTCDate()
+  const month = (now.getUTCMonth() + 1)
+  const year = now.getUTCFullYear()
 
-  return `cron(${minutes} ${hours} ${month} ? ${year} ?)`;
+  return `cron(${minutes} ${hours} ${day} ${month} ? ${year})`;
 };
-
