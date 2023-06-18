@@ -8,7 +8,7 @@ module.exports.handler = async (event) => {
   if (!body.email) {
     return {
       statusCode: 400,
-      body: JSON.stringify({ message: 'Email is missing' }),
+      body: JSON.stringify({ message: 'email is missing' }),
     };
   }
 
@@ -22,7 +22,7 @@ module.exports.handler = async (event) => {
     await sns.subscribe(params).promise();
     return {
       statusCode: 201,
-      body: JSON.stringify({ message: "Success: Created subscription" }),
+      body: JSON.stringify({ message: "success: created subscription" }),
     };
   } catch (err) {
     console.log('Failed to subscribe', err);

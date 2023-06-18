@@ -10,7 +10,7 @@ module.exports.handler = (event) => {
   if (!body.message) {
     return {
       statusCode: 400,
-      body: JSON.stringify({ message: 'Message is missing' }),
+      body: JSON.stringify({ message: 'message is missing' }),
     };
   }
 
@@ -45,7 +45,7 @@ module.exports.handler = (event) => {
 
   return {
     statusCode: 201,
-    body: JSON.stringify({ message: 'Success: Schedule created' }),
+    body: JSON.stringify({ message: 'success: schedule created' }),
   };
 };
 
@@ -53,10 +53,11 @@ const mountScheduleExpression = (minutesOffset) => {
   const now = new Date();
   now.setMinutes(now.getMinutes() + minutesOffset);
 
-  const minutes = now.getUTCMinutes();
-  const hours = now.getUTCHours();
+  const minutes = now.getUTCMinutes().toString().padStart(2, '0');
+  const hours = now.getUTCHours().toString().padStart(2, '0');
   const month = now.getUTCMonth() + 1;
   const year = now.getUTCFullYear();
 
   return `cron(${minutes} ${hours} ${month} ? ${year} ?)`;
 };
+
