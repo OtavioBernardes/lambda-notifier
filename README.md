@@ -54,6 +54,12 @@ The lambda-notifier is a project that uses AWS resources to enable the subscript
     "minutesOffset": "5"
   }
   ```
-*minutesOffset*: Time in minutes to be added to the moment **(min: 2)**
 
 9. Await the time and verify your email
+
+#### Scheduler route fields
+
+| field | required | description | default | condition|
+| ----- | ----- | ----- | ----- | ----- |
+| minutesOffset | false | time in minutes to be added to the momment | 2 | <=2 |
+| message | true | message to send in email | - | - |
