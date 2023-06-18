@@ -20,7 +20,7 @@
 
 
 <p align="center">
-      <img src="https://raw.githubusercontent.com/OtavioBernardes/lambdas-notifier/main/public/arch_draw.png">
+      <img src="https://raw.githubusercontent.com/OtavioBernardes/lambda-notifier/main/public/arch_draw.png">
 </p>
 
 ## :question: About
