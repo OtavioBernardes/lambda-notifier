@@ -61,5 +61,5 @@ The Lambda-Notifier project utilizes AWS resources to provide a comprehensive so
 
 | field | required | description | default | condition|
 | ----- | ----- | ----- | ----- | ----- |
-| minutesOffset | false | time in minutes to be added to the momment | 2 | <=2 |
+| minutesOffset | false | time in minutes to be added to the momment | 2 | >=2 |
 | message | true | message to send in email | - | - |
