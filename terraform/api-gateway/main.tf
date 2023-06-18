@@ -31,6 +31,7 @@ resource "aws_api_gateway_integration" "this" {
   type                    = "AWS_PROXY"
   uri                     = each.value.invoke_arn
 }
+
 resource "aws_api_gateway_deployment" "this" {
   depends_on = [
     "aws_api_gateway_integration.this",
